@@ -22,4 +22,11 @@ public class GlobalRestExceptionHandler {
 		log.error("执行逻辑出现异常.", e);
 		return Result.error();
 	}
+
+	@ExceptionHandler({ ApiException.class })
+	public Result<Boolean> apiException(ApiException e, HttpServletResponse response) {
+		response.setStatus(HttpStatus.OK.value());
+		log.error("执行逻辑出现异常.", e);
+		return Result.error(e.getMessage(),e.getCode());
+	}
 }

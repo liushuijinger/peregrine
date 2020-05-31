@@ -31,11 +31,14 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		Contact contact = new Contact("刘水镜", "https://liushuijinger.blog.csdn.net", "liushuijinger@163.com");
 		return new ApiInfoBuilder()
 						.title("Peregrine RESTful APIs")
 						.description("Peregrine 的 RESTFul 接口文档说明")
-						.contact(contact)
+						.contact(new Contact(
+										"刘水镜",
+										"https://liushuijinger.blog.csdn.net",
+										"liushuijinger@163.com")
+						)
 						.termsOfServiceUrl("https://liushuijinger.blog.csdn.net")
 						.version("1.0")
 						.build();

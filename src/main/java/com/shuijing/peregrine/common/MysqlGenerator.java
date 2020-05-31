@@ -18,7 +18,9 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -102,6 +104,9 @@ public class MysqlGenerator {
 			@Override
 			public void initMap() {
 				// to do nothing
+				Map<String, Object> map = new HashMap<>();
+				map.put("parent",PARENT_PACKAGE);
+				setMap(map);
 			}
 		};
 		List<FileOutConfig> focList = new ArrayList<>();

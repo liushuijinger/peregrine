@@ -9,6 +9,7 @@ import ${superMapperClassPackage};
  * </p>
  *
  * @author ${author}
+ * @blog https://liushuijinger.blog.csdn.net
  * @since ${date}
  */
 <#if kotlin>

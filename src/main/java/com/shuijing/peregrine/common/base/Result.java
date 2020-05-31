@@ -1,5 +1,6 @@
 package com.shuijing.peregrine.common.base;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
@@ -9,6 +10,7 @@ import lombok.Data;
  * @date 2020/05/18
  */
 @Data
+@AllArgsConstructor
 public class Result<T> {
 
 	private Integer code;
@@ -22,32 +24,24 @@ public class Result<T> {
 	}
 
 	public static <T> Result<T> success(T data) {
-		Result<T> result = new Result<T>();
-		result.setMessage(MessageEnum.SUCCESS.getMessage());
-		result.setCode(MessageEnum.SUCCESS.getCode());
-		result.setData(data);
-		return result;
+		ApiMessage success = ApiMessage.SUCCESS;
+		return new Result<>(success.getCode(), success.getContent(), data);
 	}
 
 	public static <T> Result<T> error() {
-		Result<T> result = new Result<>();
-		result.setMessage(MessageEnum.ERROR.getMessage());
-		result.setCode(MessageEnum.ERROR.getCode());
-		return result;
+		return error(ApiMessage.ERROR);
 	}
 
-	public static <T> Result<T> error(MessageEnum messageEnum) {
-		Result<T> result = new Result<>();
-		result.setMessage(MessageEnum.ERROR.getMessage());
-		result.setCode(MessageEnum.ERROR.getCode());
-		return result;
+	public static <T> Result<T> error(ApiMessage apiMessage) {
+		return new Result<>(apiMessage.getCode(),apiMessage.getContent(),null);
 	}
 
 	public static <T> Result<T> error(String message) {
-		Result<T> result = new Result<>();
-		result.setMessage(message);
-		result.setCode(MessageEnum.ERROR.getCode());
-		return result;
+		return error(message, ApiMessage.ERROR.getCode());
+	}
+
+	protected static <T> Result<T> error(String message,Integer code) {
+		return new Result<>(code,message,null);
 	}
 }
 
