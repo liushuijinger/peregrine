@@ -4,7 +4,10 @@
 [![Language](https://img.shields.io/badge/Language-Java_8-007396?color=orange&logo=java)](https://github.com/liushuijinger/peregrine)
 [![Framework](https://img.shields.io/badge/Framework-Spring_Boot_2.3.0-6DB33F?logo=spring)](https://github.com/liushuijinger/peregrine)
 [![DataBase](https://img.shields.io/badge/DataBase-MySQL-4479A1?logo=MySQL)](https://github.com/liushuijinger/peregrine)
+[![Druid](https://img.shields.io/badge/Pool-Druid-29F1FB?logo=Apache-Druid)](https://github.com/liushuijinger/peregrine)
 [![API](https://img.shields.io/badge/API-Swagger_2.8.0-85EA2D?logo=swagger)](https://github.com/liushuijinger/peregrine)
+
+
 
 
 ## 技术交流
@@ -20,3 +23,4 @@ Peregrine 以 Spring Boot 为基础，整合一系列常用组件，让创建一
 ## 已支持组件
 - Mybatis Plus
 - Swagger
+- Druid
