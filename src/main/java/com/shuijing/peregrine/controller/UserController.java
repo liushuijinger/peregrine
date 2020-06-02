@@ -31,36 +31,36 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "User对象",tags = "用户信息")
 public class UserController {
 
-  @Autowired
-  private UserService userService;
+    @Autowired
+    private UserService userService;
 
-  
-  @ApiOperation(value = "查询", response = User.class)
-  @GetMapping(value = "/{id}")
-  public Result info(@PathVariable Integer id) {
-    User user = userService.getById(id);
-    Assert.assertNotNull(user, ApiMessage.NOT_FOUND);
-    return Result.success(user);
-  }
-  
-  @ApiOperation(value = "新增")
-  @PostMapping
-  public Result add(@RequestBody User user) {
-    userService.save(user);
-    return Result.success();
-  }
-  
-  @ApiOperation(value = "修改")
-  @PutMapping
-  public Result modify(@RequestBody User user) {
-    userService.updateById(user);
-    return Result.success();
-  }
-  
-  @ApiOperation(value = "删除")
-  @DeleteMapping(value = "/{id}")
-  public Result remove(@PathVariable Integer id) {
-    userService.removeById(id);
-    return Result.success();
-  }
+
+    @ApiOperation(value = "查询", response = User.class)
+    @GetMapping(value = "/{id}")
+    public Result info(@PathVariable Integer id) {
+      User user = userService.getById(id);
+      Assert.assertNotNull(user, ApiMessage.NOT_FOUND);
+      return Result.success(user);
+    }
+
+    @ApiOperation(value = "新增")
+    @PostMapping
+    public Result add(@RequestBody User user) {
+      userService.save(user);
+      return Result.success();
+    }
+
+    @ApiOperation(value = "修改")
+    @PutMapping
+    public Result modify(@RequestBody User user) {
+      userService.updateById(user);
+      return Result.success();
+    }
+
+    @ApiOperation(value = "删除")
+    @DeleteMapping(value = "/{id}")
+    public Result remove(@PathVariable Integer id) {
+      userService.removeById(id);
+      return Result.success();
+    }
 }

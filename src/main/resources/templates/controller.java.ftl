@@ -1,7 +1,7 @@
 package ${package.Controller};
 
-import ${cfg.parent}.common.base.PeregrineMessage;
-import ${cfg.parent}.common.base.PeregrineAssert;
+import ${cfg.parent}.common.base.ApiMessage;
+import ${cfg.parent}.common.base.Assert;
 import ${cfg.parent}.common.base.Result;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
@@ -53,37 +53,37 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 </#if>
 
-  @Autowired
-  private ${table.serviceName} ${table.serviceName?uncap_first};
+    @Autowired
+    private ${table.serviceName} ${table.serviceName?uncap_first};
 
-  
-  @ApiOperation(value = "查询", response = ${entity}.class)
-  @GetMapping(value = "/{id}")
-  public Result info(@PathVariable Integer id) {
-    ${entity} ${entity?uncap_first} = ${table.serviceName?uncap_first}.getById(id);
-    PeregrineAssert.assertNotNull(${entity?uncap_first}, PeregrineMessage.NOT_FOUND);
-    return Result.success(${entity?uncap_first});
-  }
-  
-  @ApiOperation(value = "新增")
-  @PostMapping
-  public Result add(@RequestBody ${entity} ${entity?uncap_first}) {
-    ${table.serviceName?uncap_first}.save(${entity?uncap_first});
-    return Result.success();
-  }
-  
-  @ApiOperation(value = "修改")
-  @PutMapping
-  public Result modify(@RequestBody ${entity} ${entity?uncap_first}) {
-    ${table.serviceName?uncap_first}.updateById(${entity?uncap_first});
-    return Result.success();
-  }
-  
-  @ApiOperation(value = "删除")
-  @DeleteMapping(value = "/{id}")
-  public Result remove(@PathVariable Integer id) {
-    ${table.serviceName?uncap_first}.removeById(id);
-    return Result.success();
-  }
+
+    @ApiOperation(value = "查询", response = ${entity}.class)
+    @GetMapping(value = "/{id}")
+    public Result info(@PathVariable Integer id) {
+      ${entity} ${entity?uncap_first} = ${table.serviceName?uncap_first}.getById(id);
+      Assert.assertNotNull(${entity?uncap_first}, ApiMessage.NOT_FOUND);
+      return Result.success(${entity?uncap_first});
+    }
+
+    @ApiOperation(value = "新增")
+    @PostMapping
+    public Result add(@RequestBody ${entity} ${entity?uncap_first}) {
+      ${table.serviceName?uncap_first}.save(${entity?uncap_first});
+      return Result.success();
+    }
+
+    @ApiOperation(value = "修改")
+    @PutMapping
+    public Result modify(@RequestBody ${entity} ${entity?uncap_first}) {
+      ${table.serviceName?uncap_first}.updateById(${entity?uncap_first});
+      return Result.success();
+    }
+
+    @ApiOperation(value = "删除")
+    @DeleteMapping(value = "/{id}")
+    public Result remove(@PathVariable Integer id) {
+      ${table.serviceName?uncap_first}.removeById(id);
+      return Result.success();
+    }
 }
 </#if>
