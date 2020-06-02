@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.shuijing.peregrine.common.base.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,10 +126,10 @@ public class MysqlGenerator {
 		StrategyConfig strategy = new StrategyConfig();
 		strategy.setNaming(NamingStrategy.underline_to_camel);
 		strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setSuperEntityClass(SUPER_ENTITY_CLASS);
+        strategy.setSuperEntityClass(BaseEntity.class);
 		strategy.setSuperEntityColumns(SUPER_ENTITY_COLUMNS);
 		strategy.setEntityLombokModel(true);
-		strategy.setEntityBuilderModel(true);
+		strategy.setChainModel(true);
 		strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
 
 		strategy.setControllerMappingHyphenStyle(true);
