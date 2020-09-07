@@ -45,6 +45,24 @@ spring:
       quiet-period: 10000
   profiles:
     active: local
+  mail:
+    host: smtp.163.com
+    username: xxx@163.com
+    password: xxx
+    port: 25
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+# 邮件发送人、接收人
+mail:
+  from: xxx@163.com
+  to: xxx@163.com
 
 server:
   port: 8080
