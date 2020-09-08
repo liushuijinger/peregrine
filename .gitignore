@@ -3,7 +3,7 @@ target/
 .mvn/
 mvnw
 mvnw.cmd
-
+**/application-local.yml
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
