@@ -24,3 +24,4 @@ Peregrine 以 Spring Boot 为基础，整合一系列常用组件，让创建一
 - Mybatis Plus
 - Swagger
 - Druid
+- Email
