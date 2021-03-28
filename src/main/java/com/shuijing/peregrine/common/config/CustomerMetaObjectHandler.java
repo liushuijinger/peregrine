@@ -6,6 +6,8 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * @author 刘水镜
@@ -18,15 +20,23 @@ public class CustomerMetaObjectHandler implements MetaObjectHandler {
 
 	@Override
 	public void insertFill(MetaObject metaObject) {
-		log.info("start insert fill ....");
-		this.strictInsertFill(metaObject, "create_time", LocalDateTime.class, LocalDateTime.now());
-		this.strictUpdateFill(metaObject, "update_time",  LocalDateTime.class, LocalDateTime.now());
+		this.strictInsertFill(metaObject, "createTime", LocalDateTime::now, LocalDateTime.class);
+		this.strictInsertFill(metaObject, "updateTime", LocalDateTime::now, LocalDateTime.class);
 	}
 
 	@Override
 	public void updateFill(MetaObject metaObject) {
-		log.info("start update fill ....");
-		this.strictUpdateFill(metaObject, "update_time", LocalDateTime.class, LocalDateTime.now());
+		this.strictUpdateFill(metaObject, "updateTime", LocalDateTime::now, LocalDateTime.class);
+	}
+
+
+	@Override
+	public MetaObjectHandler strictFillStrategy(MetaObject metaObject, String fieldName, Supplier<?> fieldVal) {
+		Object obj = fieldVal.get();
+		if (Objects.nonNull(obj)) {
+			metaObject.setValue(fieldName, obj);
+		}
+		return this;
 	}
 
 }
