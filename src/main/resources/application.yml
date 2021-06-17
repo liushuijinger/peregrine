@@ -59,10 +59,26 @@ spring:
             required: true
           socketFactory:
             class: javax.net.ssl.SSLSocketFactory
-# 邮件发送人、接收人
+
+# 多邮件源
 mail:
   from: xxx@163.com
   to: xxx@163.com
+  configs:
+    # 账号 1
+    - username: xxx@163.com
+      password: xxx
+      host: smtp.163.com
+      port: 25
+      protocol: smtp
+      default-encoding: UTF-8
+    # 账号 2
+    - username: xxx@QQ.com
+      password: xxx
+      host: smtp.QQ.com
+      port: 25
+      protocol: smtp
+      default-encoding: UTF-8
 
 server:
   port: 8080
