@@ -7,7 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.apache.ibatis.annotations.Update;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -20,6 +22,7 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T> {
 
 	@ApiModelProperty(value = "唯一 id，自增")
 	@TableId(value = "id", type = IdType.AUTO)
+	@NotNull(groups = { Update.class },message = "ID 不能为空")
 	private Integer id;
 
 	@ApiModelProperty(value = "创建时间")

@@ -26,7 +26,7 @@ import java.util.Properties;
 @AllArgsConstructor
 public class MailSenderBuilder {
 
-    private final ai.shanshu.heimdallr.config.MailConfig mailConfig;
+    private final MailConfig mailConfig;
 
     private final Map<String, JavaMailSenderImpl> senderMap;
 
@@ -35,8 +35,7 @@ public class MailSenderBuilder {
      */
     @PostConstruct
     public void buildMailSender(){
-        List<ai.shanshu.heimdallr.config.MailConfig.MailProperties> mailConfigs = mailConfig.getConfigs();
-        log.info("初始化mailSender");
+        List<MailConfig.MailProperties> mailConfigs = mailConfig.getConfigs();
         mailConfigs.forEach(mailProperties -> {
 
             // 邮件发送者
@@ -48,13 +47,13 @@ public class MailSenderBuilder {
             javaMailSender.setUsername(mailProperties.getUsername());
             javaMailSender.setPassword(mailProperties.getPassword());
 
-            Map<String, String> map = new HashMap<>();
-            map.put("mail.smtp.auth", "true");
-            map.put("mail.smtp.starttls.required", "true");
-            map.put("mail.smtp.starttls.enable", "true");
-            map.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            Map<String, String> propertyMap = new HashMap<>();
+            propertyMap.put("mail.smtp.auth", "true");
+            propertyMap.put("mail.smtp.starttls.required", "true");
+            propertyMap.put("mail.smtp.starttls.enable", "true");
+            propertyMap.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
             Properties properties = new Properties();
-            properties.putAll(map);
+            properties.putAll(propertyMap);
             javaMailSender.setJavaMailProperties(properties);
 
             // 添加数据

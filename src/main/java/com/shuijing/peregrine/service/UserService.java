@@ -2,6 +2,8 @@ package com.shuijing.peregrine.service;
 
 import com.shuijing.peregrine.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Update;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * <p>
@@ -14,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserService extends IService<User> {
 
+    Boolean validParam(@Validated(Update.class) User user);
 }
