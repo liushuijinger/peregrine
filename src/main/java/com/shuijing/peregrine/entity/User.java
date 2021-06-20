@@ -6,7 +6,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Update;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -27,9 +31,11 @@ public class User extends BaseEntity<User> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "姓名")
+    @NotBlank(message = "名字不能为空")
     private String name;
 
     @ApiModelProperty(value = "年龄")
+    @NotNull(message = "年龄不能为空")
     private Integer age;
 
 
