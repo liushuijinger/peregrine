@@ -59,6 +59,9 @@ spring:
             required: true
           socketFactory:
             class: javax.net.ssl.SSLSocketFactory
+  messages:
+    basename: messages
+    encoding: UTF-8
 
 # 多邮件源
 mail:

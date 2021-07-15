@@ -5,6 +5,7 @@ import com.shuijing.peregrine.common.base.Assert;
 import com.shuijing.peregrine.common.base.Result;
 import com.shuijing.peregrine.service.UserService;
 import com.shuijing.peregrine.entity.User;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,7 +46,7 @@ public class UserController {
 
     @ApiOperation(value = "新增")
     @PostMapping
-    public Result<Boolean> add(@RequestBody User user) {
+    public Result<Boolean> add(@Validated @RequestBody User user) {
       userService.save(user);
       return Result.success();
     }
