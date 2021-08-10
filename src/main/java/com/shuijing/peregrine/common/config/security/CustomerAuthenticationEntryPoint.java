@@ -5,6 +5,7 @@ import com.shuijing.peregrine.common.base.Result;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,15 +17,15 @@ import java.nio.charset.StandardCharsets;
  * @author liushuijing (shuijing@shanshu.ai)
  * @date 2021-08-09
  */
-//@Component
+@Component
 public class CustomerAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
     /**
      * @param loginFormUrl URL where the login page can be found. Should either be
      *                     relative to the web-app context path (include a leading {@code /}) or an absolute
      *                     URL.
      */
-    public CustomerAuthenticationEntryPoint(String loginFormUrl) {
-        super(loginFormUrl);
+    public CustomerAuthenticationEntryPoint() {
+        super("/login.html");
     }
 
     @Override

@@ -9,6 +9,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * @author liushuijing (shuijing@shanshu.ai)
@@ -29,17 +33,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomerAccessDeniedHandler accessDeniedHandler;
 
-    //    @Autowired
-    //    private CustomerAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private CustomerAuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        //        jdbcTokenRepository.setCreateTableOnStartup(true);
+        return jdbcTokenRepository;
+    }
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -57,21 +71,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         //表示剩余的其他接口，登录之后就能访问
                         .anyRequest().authenticated().and().formLogin()
                         //定义登录页面，未登录时，访问一个需要登录之后才能访问的接口，会自动跳转到该页面
-                        //                        .loginPage("/login")
+                        .loginPage("/login.html")
                         //登录处理接口
                         .loginProcessingUrl("/login")
                         //定义登录时，用户名的 key，默认为 username
-                        .usernameParameter("uname")
+                        .usernameParameter("username")
                         //定义登录时，用户密码的 key，默认为 password
-                        .passwordParameter("passwd").successHandler(authenticationSuccessHandler)
+                        .passwordParameter("password").successHandler(authenticationSuccessHandler)
                         //和表单登录相关的接口统统都直接通过
                         .failureHandler(authenticationFailureHandler).permitAll().and().logout().logoutUrl("/logout")
-                        .logoutSuccessHandler(logoutSuccessHandler).permitAll().and()
+                        .logoutSuccessHandler(logoutSuccessHandler).permitAll().and().rememberMe()
+                        .tokenRepository(persistentTokenRepository()).tokenValiditySeconds(3600).and()
                         .userDetailsService(userDetailsService).csrf().disable();
 
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler)
-        //                        .authenticationEntryPoint(authenticationEntryPoint)
-        ;
+                        .authenticationEntryPoint(authenticationEntryPoint);
     }
 
     //    @Override
