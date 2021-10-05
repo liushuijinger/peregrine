@@ -5,6 +5,8 @@ import com.shuijing.peregrine.common.base.Assert;
 import com.shuijing.peregrine.common.base.Result;
 import com.shuijing.peregrine.service.UserService;
 import com.shuijing.peregrine.entity.User;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+
 /**
  * <p>
  * 用户信息 前端控制器
@@ -27,6 +32,7 @@ import io.swagger.annotations.ApiOperation;
  * @blog https://liushuijinger.blog.csdn.net
  * @since 2020-05-31
  */
+@Slf4j
 @RestController
 @RequestMapping("/user")
 @Api(value = "User对象",tags = "用户信息")
@@ -63,5 +69,20 @@ public class UserController {
     public Result<Boolean> remove(@PathVariable Integer id) {
       userService.removeById(id);
       return Result.success();
+    }
+
+    @ApiOperation(value = "获取当前用户")
+    @GetMapping(value = "/current-user")
+    public Result<String> getCurrentUser(Principal principal, Authentication authentication, HttpServletRequest request) {
+        String userName = principal.getName();
+        log.info(userName);
+
+        userName = authentication.getName();
+        log.info(userName);
+
+        userName = request.getUserPrincipal().getName();
+        log.info(userName);
+
+        return Result.success(userName);
     }
 }

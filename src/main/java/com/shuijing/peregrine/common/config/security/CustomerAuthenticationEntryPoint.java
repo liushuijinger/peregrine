@@ -32,10 +32,10 @@ public class CustomerAuthenticationEntryPoint extends LoginUrlAuthenticationEntr
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws
                     IOException, ServletException {
 
-        request.setCharacterEncoding(StandardCharsets.UTF_8.toString());
+        response.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         if (isAjaxRequest(request)) {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.getWriter().write(JSONObject.toJSONString(Result.error("没有权限")));
+            response.getWriter().write(JSONObject.toJSONString(Result.error("请登录！")));
         } else {
             response.setContentType(MediaType.TEXT_HTML_VALUE);
             super.commence(request, response, e);

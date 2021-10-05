@@ -1,34 +1,34 @@
-<!--
-  ~ Copyright (c) 2019, Cardinal Operations and/or its affiliates. All rights reserved.CARDINAL OPERATIONS PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
-  -->
-
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
-<head><title>Login Page</title></head>
-<body onload="document.f.username.focus();">
-<h3>Login with Username and Password</h3>
-<form name="f" action="/peregrine/login" method="POST">
-    <table>
-        <tbody>
-        <tr>
-            <td>User:</td>
-            <td><input type="text" name="username" value="" autocomplete="off"></input>
-            </td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type="password" name="password" autocomplete="off"></input>
-            </td>
-        </tr>
-        <tr>
-            <td><input type="checkbox" name="remember-me"></input></td>
-            <td>Remember me on this computer.</td>
-        </tr>
-        <tr>
-            <td colspan="2"><input name="submit" type="submit" value="Login"></input></td>
-        </tr>
-        </tbody>
-    </table>
-</form>
-<audio controls="controls" style="display: none;"></audio>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>登录</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous"/>
+</head>
+<body>
+<div class="container">
+    <form class="form-signin" method="post" action="/peregrine/login">
+        <h2 class="form-signin-heading">请登录</h2>
+        <p>
+            <input type="text" id="username" name="username" class="form-control"
+                                                 placeholder="用户名" required autofocus>
+        </p>
+        <p>
+            <input type="password" id="password" name="password" class="form-control"
+                                                 placeholder="密码" required>
+        </p>
+        <p>
+            <input id="remember-me" type="checkbox" name="remember-me">
+            <label for="remember-me">记住我</label>
+        </p>
+        <input name="_csrf" type="hidden" value="a76cea72-cea8-455d-b6c0-25203fd022ef"/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    </form>
+</div>
 </body>
 </html>
