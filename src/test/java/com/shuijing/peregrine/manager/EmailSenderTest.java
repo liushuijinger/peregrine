@@ -1,5 +1,6 @@
 package com.shuijing.peregrine.manager;
 
+import com.shuijing.peregrine.manager.mail.EmailSender;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

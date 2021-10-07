@@ -62,7 +62,31 @@ spring:
   messages:
     basename: messages
     encoding: UTF-8
-
+  quartz:
+    #数据库方式
+    job-store-type: JDBC
+    #初始化表结构
+    jdbc:
+      initialize-schema: always
+#      schema: classpath:tables_mysql_innodb.sql
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: quartzScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: false
+            clusterCheckinInterval: 10000
+            useProperties: false
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
 # 多邮件源
 mail:
   from: xxx@163.com

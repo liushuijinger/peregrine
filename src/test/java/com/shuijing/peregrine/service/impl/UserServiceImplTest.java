@@ -9,7 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author liushuijing (shuijing@shanshu.ai)
+ * @author 刘水镜
+ * @blog https://liushuijinger.blog.csdn.net
  * @date 2021-06-18
  */
 @SpringBootTest

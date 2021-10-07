@@ -17,7 +17,8 @@ import org.springframework.session.security.web.authentication.SpringSessionReme
 import javax.sql.DataSource;
 
 /**
- * @author liushuijing (shuijing@shanshu.ai)
+ * @author 刘水镜
+ * @blog https://liushuijinger.blog.csdn.net
  * @date 2021-08-09
  */
 @Configuration
