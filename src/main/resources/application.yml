@@ -120,6 +120,7 @@ server:
     context-path: /peregrine
     session:
       timeout: 60
+  shutdown: graceful
 
 logging:
   level:
