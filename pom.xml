@@ -82,7 +82,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.4.0</version>
+            <version>3.5.2</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>com.baomidou</groupId>-->
@@ -92,7 +92,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>3.4.0</version>
+            <version>3.5.2</version>
         </dependency>
 
         <!--持久层相关依赖结束-->

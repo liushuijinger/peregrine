@@ -2,9 +2,6 @@ package com.shuijing.peregrine.service;
 
 import com.shuijing.peregrine.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Update;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 

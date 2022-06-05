@@ -1,27 +1,20 @@
 package com.shuijing.peregrine.common;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-import com.baomidou.mybatisplus.generator.config.TemplateConfig;
-import com.baomidou.mybatisplus.generator.config.po.TableFill;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
+import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.baomidou.mybatisplus.generator.fill.Column;
+import com.baomidou.mybatisplus.generator.keywords.MySqlKeyWordsHandler;
 import com.shuijing.peregrine.common.base.BaseEntity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -32,18 +25,14 @@ import java.util.Scanner;
 public class MysqlGenerator {
 
     public static final String DATABASE_URL = "jdbc:mysql://127.0.0.1:3306/peregrine?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai";
-    public static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
     public static final String DATABASE_USERNAME = "root";
     public static final String DATABASE_PASSWORD = "123456";
 
     public static final String OUT_PUT_PATH = "/src/main/java";
-    public static final String TEMPLATES_MAPPER_XML_PATH = "/templates/mapper.xml.ftl";
     public static final String XML_PATH = "/src/main/resources/mapper/";
-    public static final String XML_POSTFIX = "Mapper";
 
     public static final String AUTHOR = "刘水镜";
     public static final String PARENT_PACKAGE = "com.shuijing.peregrine";
-    public static final String SUPER_ENTITY_CLASS = "com.shuijing.peregrine.common.base.BaseEntity";
     public static final String[] SUPER_ENTITY_COLUMNS = {"id", "create_time", "update_time", "creator", "updator"};
 
     /**
@@ -69,83 +58,65 @@ public class MysqlGenerator {
      * RUN THIS
      */
     public static void main(String[] args) {
-        // 代码生成器
-        AutoGenerator mpg = new AutoGenerator();
 
-        // 全局配置
-        GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + OUT_PUT_PATH);
-        gc.setAuthor(AUTHOR);
-        gc.setOpen(false);
-        gc.setServiceName("%sService");
-        gc.setBaseResultMap(true);
-        gc.setActiveRecord(true);
-        gc.setBaseColumnList(true);
-        gc.setSwagger2(true);
-        gc.setFileOverride(true);
-        mpg.setGlobalConfig(gc);
 
-        // 数据源配置
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl(DATABASE_URL);
-        dsc.setDriverName(DATABASE_DRIVER);
-        dsc.setUsername(DATABASE_USERNAME);
-        dsc.setPassword(DATABASE_PASSWORD);
-        mpg.setDataSource(dsc);
+        DataSourceConfig.Builder dataSourceConfigBuilder = new DataSourceConfig.Builder(DATABASE_URL, DATABASE_USERNAME, DATABASE_PASSWORD)
+                .dbQuery(new MySqlQuery())
+                .typeConvert(new MySqlTypeConvert())
+                .keyWordsHandler(new MySqlKeyWordsHandler());
 
-        // 包配置
-        PackageConfig pc = new PackageConfig();
-        // 不设置模块名的话 Controller 请求路径会多一个 “/”
-        pc.setModuleName(null);
-        pc.setParent(PARENT_PACKAGE);
-        mpg.setPackageInfo(pc);
+        FastAutoGenerator.create(dataSourceConfigBuilder)
+                .globalConfig(builder -> {
+                    // 设置作者
+                    builder.author(AUTHOR)
+                            // 开启 swagger 模式
+                            .enableSwagger()
+                            .disableOpenDir()
 
-        // 自定义配置
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                // to do nothing
-                Map<String, Object> map = new HashMap<>();
-                map.put("parent", PARENT_PACKAGE);
-                setMap(map);
-            }
-        };
-        List<FileOutConfig> focList = new ArrayList<>();
-        focList.add(new FileOutConfig(TEMPLATES_MAPPER_XML_PATH) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                // 自定义输入文件名称
-                return projectPath + XML_PATH + tableInfo.getEntityName() + XML_POSTFIX + StringPool.DOT_XML;
-            }
-        });
-        cfg.setFileOutConfigList(focList);
-        mpg.setCfg(cfg);
-        mpg.setTemplate(new TemplateConfig().setXml(null));
+                            // 指定输出目录
+                            .outputDir(projectPath + OUT_PUT_PATH);
+                })
+                .packageConfig(builder -> {
+                    // 设置父包名
+                    builder.parent(PARENT_PACKAGE)
+                            // 设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, projectPath + XML_PATH))
+                            .xml("").moduleName(null)
+                    ;
+                })
+                .strategyConfig(builder -> {
+                    // 设置需要生成的表名
+                    builder.addInclude(scanner("表名，多个英文逗号分割").split(","))
+                            // 设置过滤表前缀
+                            .addTablePrefix("t_")
 
-        // 策略配置
-        StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setSuperEntityClass(BaseEntity.class);
-        strategy.setSuperEntityColumns(SUPER_ENTITY_COLUMNS);
-        strategy.setEntityLombokModel(true);
-        strategy.setChainModel(true);
-        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
+                            .mapperBuilder().enableBaseColumnList().enableBaseResultMap()
+                            .fileOverride()
 
-        strategy.setControllerMappingHyphenStyle(true);
-        strategy.setRestControllerStyle(true);
+                            .entityBuilder().enableLombok().superClass(BaseEntity.class)
+                            .addSuperEntityColumns(SUPER_ENTITY_COLUMNS)
+                            .enableChainModel()
+                            .addTableFills(new Column("creator", FieldFill.INSERT))
+                            .addTableFills(new Column("updator", FieldFill.INSERT_UPDATE))
+                            .idType(IdType.AUTO)
+                            .enableActiveRecord()
+                            .fileOverride()
 
-        // 配置自动填充字段（Entity 会添加相应注解）
-        List<TableFill> tableFillList = new ArrayList<>();
-        tableFillList.add(new TableFill("creator", FieldFill.INSERT));
-        tableFillList.add(new TableFill("updator", FieldFill.INSERT_UPDATE));
-        strategy.setTableFillList(tableFillList);
+                            .controllerBuilder().enableRestStyle()
+//                            .fileOverride()
 
-        mpg.setStrategy(strategy);
-        // 选择 freemarker 引擎需要指定如下加，注意 pom 依赖必须有！
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
-        mpg.execute();
+                            .serviceBuilder().formatServiceFileName("%sService")
+//                            .fileOverride()
+
+                    ;
+                })
+                // 使用Freemarker引擎模板，默认的是Velocity引擎模板
+                .templateEngine(new FreemarkerTemplateEngine())
+
+                .injectionConfig(builder -> {
+                    builder.customMap(Collections.singletonMap("parent", PARENT_PACKAGE)).fileOverride();
+                }).execute();
     }
 
 }

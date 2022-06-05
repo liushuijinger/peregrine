@@ -4,10 +4,8 @@ import com.shuijing.peregrine.entity.User;
 import com.shuijing.peregrine.mapper.UserMapper;
 import com.shuijing.peregrine.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+
 
 import javax.validation.Valid;
 

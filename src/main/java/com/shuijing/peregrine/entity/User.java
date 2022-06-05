@@ -1,5 +1,6 @@
 package com.shuijing.peregrine.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.shuijing.peregrine.common.base.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -7,8 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -18,7 +17,7 @@ import java.io.Serializable;
  *
  * @author 刘水镜
  * @blog https://liushuijinger.blog.csdn.net
- * @since 2020-05-31
+ * @since 2022-06-05
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,16 +28,15 @@ public class User extends BaseEntity<User> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "姓名")
-    @NotBlank(message = "{name.not.blank}")
+    @TableField("`name`")
     private String name;
 
     @ApiModelProperty(value = "年龄")
-    @NotNull(message = "{age.not.null}")
     private Integer age;
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return null;
     }
 

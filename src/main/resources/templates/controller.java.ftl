@@ -1,8 +1,8 @@
 package ${package.Controller};
 
-import ${cfg.parent}.common.base.ApiMessage;
-import ${cfg.parent}.common.base.Assert;
-import ${cfg.parent}.common.base.Result;
+import ${parent}.common.base.ApiMessage;
+import ${parent}.common.base.Assert;
+import ${parent}.common.base.Result;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 <#else>
 import org.springframework.stereotype.Controller;
 </#if>
-<#if swagger2>
+<#if swagger>
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 </#if>
@@ -41,7 +41,7 @@ import ${superControllerClassPackage};
 @Controller
 </#if>
 @RequestMapping("<#if package.ModuleName??>/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle??>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
-<#if swagger2>
+<#if swagger>
 @Api(value = "${entity}对象",tags = "${table.comment!}")
 </#if>
 <#if kotlin>
@@ -59,7 +59,7 @@ public class ${table.controllerName} {
 
     @ApiOperation(value = "查询", response = ${entity}.class)
     @GetMapping(value = "/{id}")
-    public Result info(@PathVariable Integer id) {
+    public Result<${entity}> info(@PathVariable Integer id) {
       ${entity} ${entity?uncap_first} = ${table.serviceName?uncap_first}.getById(id);
       Assert.assertNotNull(${entity?uncap_first}, ApiMessage.NOT_FOUND);
       return Result.success(${entity?uncap_first});
