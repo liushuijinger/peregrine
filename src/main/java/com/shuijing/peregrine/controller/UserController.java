@@ -3,6 +3,7 @@ package com.shuijing.peregrine.controller;
 import com.shuijing.peregrine.common.base.ApiMessage;
 import com.shuijing.peregrine.common.base.Assert;
 import com.shuijing.peregrine.common.base.Result;
+import com.shuijing.peregrine.common.config.RequestDataHelper;
 import com.shuijing.peregrine.service.UserService;
 import com.shuijing.peregrine.entity.User;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,9 @@ import io.swagger.annotations.ApiOperation;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -84,5 +88,16 @@ public class UserController {
         log.info(userName);
 
         return Result.success(userName);
+    }
+
+    @ApiOperation(value = "动态表名")
+    @GetMapping(value = "/dynamic-table-name")
+    public Result<List<User>> dynamicTableName(String tablePostfix) {
+
+        Map<String, Object> requestData = new HashMap<>();
+        requestData.put("TABLE_POSTFIX", tablePostfix);
+        RequestDataHelper.setRequestData(requestData);
+
+        return Result.success(userService.list());
     }
 }
